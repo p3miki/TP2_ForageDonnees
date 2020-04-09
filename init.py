@@ -10,7 +10,6 @@ def _define_args():
 
 def _get_job(parser):
     args = parser.parse_args()
-    print(args.job)
     if not args.job:
         return 1
     elif args.job in ["1", "2"]:

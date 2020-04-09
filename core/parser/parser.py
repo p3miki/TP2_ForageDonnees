@@ -42,6 +42,19 @@ def _region_sales(data_frame):
 def _sanitize(data_frame):
     del data_frame['name']
 
+    data_frame['genre'] = data_frame['genre'].apply(lambda x: x.split(", "))
+    _index_to_drop = []
+
+    for index, row in data_frame.iterrows():
+        for genre in row.genre:
+            if genre == 'Hentai':
+                _index_to_drop.append(index)
+
+    for index in _index_to_drop:
+        data_frame = data_frame.drop(index)
+
     data_frame['rating'] = data_frame['rating'].apply(lambda x: math.ceil(x))
+    data_frame.to_csv('test.csv')
+
     return data_frame.sort_index()
     
