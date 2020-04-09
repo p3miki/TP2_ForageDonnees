@@ -7,11 +7,7 @@ def parse_data(data_frame, job):
         :type data_frame: pandas.DataFrame"""
     data_frame.dropna(inplace=True)
 
-    if job == 2:
-        return {
-            "sanitized_data": _sanitize(data_frame)
-        }
-    else:
+    if job == 1:
         data_frame = data_frame.loc[data_frame['Year'] != 2020]
         data_frame = data_frame.loc[data_frame['Year'] != 2017]
 
@@ -19,6 +15,14 @@ def parse_data(data_frame, job):
             "global": _global_sales(data_frame),
             "console": _console_sales(data_frame),
             "region": _region_sales(data_frame)
+        }
+    elif job == 2:
+        return {
+            "sanitized_data": _sanitize(data_frame)
+        }
+    else:
+        return {
+            "default": data_frame
         }
 
 def _global_sales(data_frame):
