@@ -15,4 +15,4 @@ install:
   - pip install -r requirements.txt
 
 script:
-  - pylint--rcfile="./.pylintrc" ./core/*.py 
+  - pylint --rcfile=.pylintrc ./core/*.py 

@@ -23,8 +23,7 @@ def afficher_globales(data_frame):
     plt.xlabel('Genres de jeu')
     plt.ylabel('Ventes (en millions)')
     plt.title('Ventes totales par Genres')
-    _maximize(plt.get_current_fig_manager(), plt)
-    plt.show()
+    show(plt)
 
 def afficher_consoles(data_frame):
     """Prints sales by console
@@ -34,8 +33,7 @@ def afficher_consoles(data_frame):
     plt.xlabel('Nom de Console')
     plt.ylabel('Ventes (en millions)')
     plt.title('Ventes par Console')
-    _maximize(plt.get_current_fig_manager(), plt)
-    plt.show()
+    show(plt)
 
 def afficher_regions(data_frame):
     """Prints sales graph by region
@@ -45,9 +43,11 @@ def afficher_regions(data_frame):
     plt.xlabel('Région De Vente')
     plt.ylabel('Ventes (en millions)')
     plt.title('Ventes par région')
+    show(plt)
+
+def show(plt):
     _maximize(plt.get_current_fig_manager(), plt)
     plt.show()
-
 
 def _maximize(manager, plotter):
     if sys.platform.startswith("linux") and plotter.get_backend() == "TkAgg":
