@@ -5,10 +5,14 @@ import pandas as pd
 import numpy as np
 
 
-def update_view(data_frame):
+def update_view(data_frame, job):
     """Plots the graphs with the data provided"""
-    print(data_frame)
-
+    if job == 2:
+        print(data_frame)
+    else:
+        afficher_regions(data_frame['region'])
+        afficher_globales(data_frame['global'])
+        afficher_consoles(data_frame['console'])
 
 def afficher_globales(data_frame):
     """Prints global sales
