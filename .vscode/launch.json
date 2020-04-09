@@ -9,7 +9,11 @@
             "type": "python",
             "request": "launch",
             "program": "${workspaceRoot}/init.py",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "args": [
+                "--job",
+                "2"
+            ]
         }
     ]
 }

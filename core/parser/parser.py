@@ -1,5 +1,7 @@
 import math
-import pandas
+from collections import Counter
+from itertools import chain
+import pandas as pd
 
 def parse_data(data_frame, job):
     """Used to filter the data before returning the data frame
@@ -18,14 +20,32 @@ def parse_data(data_frame, job):
             "region": _region_sales(data_frame)
         }
     elif job == 2:
+        data_frame = _sanitize(data_frame)
         data = {
-            "sanitized_data": _sanitize(data_frame)
+            "genres": _get_genres(data_frame),
+            "ratings": _get_ratings(data_frame)
         }
     else:
         data = {
             "default": data_frame
         }
     return data
+
+def _get_ratings(data_frame):
+    ratings = data_frame['rating'].value_counts().sort_index()
+
+    return ratings
+
+
+def _get_genres(data_frame):
+    genres = pd.Series(Counter(chain(*data_frame.genre)))
+    genres = genres.sort_index().rename_axis('genre').reset_index(name='count')
+    genres = genres.sort_values(by='count', ascending=False)
+
+    _others = genres.tail(len(genres) - 10)
+    genres = genres.head(10)
+    genres = genres.append({'genre': 'Others', 'count': _others.sum()['count']}, ignore_index=True)
+    return genres
 
 def _global_sales(data_frame):
     return data_frame.groupby(['Genre'])['Global_Sales'].sum().sort_values()

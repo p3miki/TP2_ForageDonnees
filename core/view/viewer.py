@@ -6,19 +6,16 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
-def update_view(data_frame, job):
+def update_view(data_frames, job):
     """Plots the graphs with the data provided"""
     if job == 2:
         # print(data_frame)
-        genres = _get_genres(data_frame['sanitized_data'])
-        ratings = _get_ratings(data_frame['sanitized_data'])
-        print(ratings)
-        plot_genres(genres)
-        plot_rating(ratings)
+        plot_genres(data_frames['genres'])
+        plot_rating(data_frames['ratings'])
     else:
-        afficher_regions(data_frame['region'])
-        afficher_globales(data_frame['global'])
-        afficher_consoles(data_frame['console'])
+        afficher_regions(data_frames['region'])
+        afficher_globales(data_frames['global'])
+        afficher_consoles(data_frames['console'])
 
 def plot_genres(data_frame):
     """Prints total count of genres of anime
@@ -36,21 +33,6 @@ def plot_rating(data_frame):
     data_frame.plot(kind='bar')
     plt.title('Nombre d\'anime par classification')
     _show(plt)
-
-def _get_ratings(data_frame):
-    ratings = data_frame['rating'].value_counts().sort_index()
-
-    return ratings
-
-def _get_genres(data_frame):
-    genres = pd.Series(Counter(chain(*data_frame.genre)))
-    genres = genres.sort_index().rename_axis('genre').reset_index(name='count')
-    genres = genres.sort_values(by='count', ascending=False)
-
-    _others = genres.tail(len(genres) - 10)
-    genres = genres.head(10)
-    genres = genres.append({'genre': 'Others', 'count': _others.sum()['count']}, ignore_index=True)
-    return genres
 
 def afficher_globales(data_frame):
     """Prints global sales
