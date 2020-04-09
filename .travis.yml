@@ -1,0 +1,18 @@
+language: python
+
+branches:
+  only:
+    - master
+    - release/*
+    - develop
+    - bugfix/*
+    - feature/*
+
+python:
+  - "3.7"
+
+install:
+  - pip install -r requirements.txt
+
+script:
+  - pylint ./core --rcfile="./.pylintrc"
