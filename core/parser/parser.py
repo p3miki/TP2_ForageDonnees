@@ -1,4 +1,6 @@
 import math
+import csv
+
 from collections import Counter
 from itertools import chain
 import pandas as pd
@@ -21,6 +23,7 @@ def parse_data(data_frame, job):
         }
     elif job == 2:
         data_frame = _sanitize(data_frame)
+        data_frame.to_csv('anime_san.csv', quoting=csv.QUOTE_ALL)
         data = {
             "genres": _get_genres(data_frame),
             "ratings": _get_ratings(data_frame)
