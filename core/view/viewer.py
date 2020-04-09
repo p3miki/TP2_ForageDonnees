@@ -10,11 +10,22 @@ def update_view(data_frame, job):
     """Plots the graphs with the data provided"""
     if job == 2:
         # print(data_frame)
-        _get_genres(data_frame['sanitized_data'])
+        genres = _get_genres(data_frame['sanitized_data'])
+        print(genres)
+        plot_genres(genres)
     else:
         afficher_regions(data_frame['region'])
         afficher_globales(data_frame['global'])
         afficher_consoles(data_frame['console'])
+
+def plot_genres(data_frame):
+    """Prints total count of genres of anime
+        :param data_frame
+        :type data_frame: pandas.DataFrame"""
+    explode = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.05)
+    data_frame.plot(kind='pie', y='count', labels=data_frame['genre'], explode=explode)
+    plt.title('Nombre d\'anime par genres')
+    _show(plt)
 
 def _get_genres(data_frame):
     genres = pd.Series(Counter(chain(*data_frame.genre)))
@@ -23,9 +34,8 @@ def _get_genres(data_frame):
 
     _others = genres.tail(len(genres) - 10)
     genres = genres.head(10)
-    genres.reset_index(drop=True, inplace=True)
     genres = genres.append({'genre': 'Others', 'count': _others.sum()['count']}, ignore_index=True)
-    print(genres)
+    return genres
 
 def afficher_globales(data_frame):
     """Prints global sales
