@@ -11,8 +11,10 @@ def update_view(data_frame, job):
     if job == 2:
         # print(data_frame)
         genres = _get_genres(data_frame['sanitized_data'])
-        print(genres)
+        ratings = _get_ratings(data_frame['sanitized_data'])
+        print(ratings)
         plot_genres(genres)
+        plot_rating(ratings)
     else:
         afficher_regions(data_frame['region'])
         afficher_globales(data_frame['global'])
@@ -26,6 +28,19 @@ def plot_genres(data_frame):
     data_frame.plot(kind='pie', y='count', labels=data_frame['genre'], explode=explode)
     plt.title('Nombre d\'anime par genres')
     _show(plt)
+
+def plot_rating(data_frame):
+    """Print total count for each rating
+        :param data_frame
+        :type data_frame: pandas.DataFrame"""
+    data_frame.plot(kind='bar')
+    plt.title('Nombre d\'anime par classification')
+    _show(plt)
+
+def _get_ratings(data_frame):
+    ratings = data_frame['rating'].value_counts().sort_index()
+
+    return ratings
 
 def _get_genres(data_frame):
     genres = pd.Series(Counter(chain(*data_frame.genre)))
