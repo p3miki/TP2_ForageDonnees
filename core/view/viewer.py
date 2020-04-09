@@ -7,9 +7,7 @@ import numpy as np
 
 def update_view(data_frame):
     """Plots the graphs with the data provided"""
-    afficher_regions(data_frame['region'])
-    afficher_globales(data_frame['global'])
-    afficher_consoles(data_frame['console'])
+    print(data_frame)
 
 
 def afficher_globales(data_frame):
