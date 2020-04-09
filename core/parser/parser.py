@@ -6,24 +6,26 @@ def parse_data(data_frame, job):
         :param data_frame:
         :type data_frame: pandas.DataFrame"""
     data_frame.dropna(inplace=True)
+    data = {}
 
     if job == 1:
         data_frame = data_frame.loc[data_frame['Year'] != 2020]
         data_frame = data_frame.loc[data_frame['Year'] != 2017]
 
-        return {
+        data = {
             "global": _global_sales(data_frame),
             "console": _console_sales(data_frame),
             "region": _region_sales(data_frame)
         }
     elif job == 2:
-        return {
+        data = {
             "sanitized_data": _sanitize(data_frame)
         }
     else:
-        return {
+        data = {
             "default": data_frame
         }
+    return data
 
 def _global_sales(data_frame):
     return data_frame.groupby(['Genre'])['Global_Sales'].sum().sort_values()
