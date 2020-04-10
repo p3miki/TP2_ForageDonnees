@@ -34,6 +34,16 @@ def parse_data(data_frame, job):
         }
     return data
 
+def _transform_ratings(rating):
+    if rating <= 4:
+        return "low"
+    elif rating <= 6:
+        return "med"
+    elif rating <= 8:
+        return "high"
+    else:
+        return "max"
+
 def _get_ratings(data_frame):
     return data_frame['rating'].value_counts().sort_index()
 
@@ -63,6 +73,7 @@ def _sanitize(data_frame):
     data_frame = data_frame.explode('genre')
 
     data_frame['rating'] = data_frame['rating'].apply(lambda x: math.ceil(x))
+    data_frame['rating'] = data_frame['rating'].apply(_transform_ratings)
     data_frame = data_frame.drop(data_frame[data_frame['episodes'] == 'Unknown'].index)
 
     return data_frame.sort_index()
