@@ -58,6 +58,7 @@ def _sanitize(data_frame):
     data_frame = data_frame.explode('genre')
 
     data_frame['rating'] = data_frame['rating'].apply(lambda x: math.ceil(x))
+    data_frame = data_frame.drop(data_frame[data_frame['episodes'] == 'Unknown'].index)
 
     return data_frame.sort_index()
     
