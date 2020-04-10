@@ -21,8 +21,7 @@ def plot_genres(data_frame):
     """Prints total count of genres of anime
         :param data_frame
         :type data_frame: pandas.DataFrame"""
-    explode = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.05)
-    data_frame.plot(kind='pie', y='count', labels=data_frame['genre'], explode=explode)
+    data_frame.plot(kind='pie', y='count')
     plt.title('Nombre d\'anime par genres')
     _show(plt)
 
