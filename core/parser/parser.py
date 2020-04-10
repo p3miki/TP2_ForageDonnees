@@ -38,7 +38,12 @@ def _get_ratings(data_frame):
     return data_frame['rating'].value_counts().sort_index()
 
 def _get_genres(data_frame):
-    return data_frame['genre'].value_counts().sort_index()
+    genres = data_frame['genre'].value_counts().sort_index()
+    _others = genres.tail(len(genres) - 10)
+    _others = _others.sum()
+    genres = genres.head(10)
+    genres = genres.append(pd.Series(_others, index=['Others']))
+    return genres
 
 def _global_sales(data_frame):
     return data_frame.groupby(['Genre'])['Global_Sales'].sum().sort_values()
